@@ -18,6 +18,8 @@ def main() -> None:
     text = ROAST.strip()
     if not 1 <= len(text) <= 200:
         raise ValueError(f"roast must be 1-200 chars, got {len(text)}")
+    if any(ord(ch) < 0x20 for ch in text):
+        raise ValueError("roast must be one printable line, no control chars")
     if "\n" in text or "\r" in text:
         raise ValueError("roast must be a single line")
     os.makedirs("/output", exist_ok=True)
